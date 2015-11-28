@@ -1,0 +1,25 @@
+/*CSS File for QuestionApp*/
+
+#navigation {
+	float: right;
+}
+
+/*only ul elements inside the element tagged "navigation"*/
+#navigation ul {
+	margin: 0px;
+	padding: 0px; /*get rid of spacing*/
+}
+
+/*only li elements inside a ul inside the "navigation" element*/
+#navigation ul li {
+	list-style-type: none; /*no bulletpoints, etc*/
+	display: inline; /*everything goes on one line*/
+}
+
+#navigation ul li:before {
+	content: " | "; /*put " | " before every li inside navigation*/
+}
+
+#navigation li:first-child:before {
+	content: none; /*(this is fence posting)*/
+}
