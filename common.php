@@ -8,7 +8,7 @@ function common_head() { ?>
 			<meta charset="utf-8"/>
 			<!-- <link href="..." type="image/..." rel="shortcut icon"/> TODO -->
 			<link href="style/main.css" type="text/css" rel="stylesheet"/>
-			<!-- <script type="text/javascript" src="js/..."/> TODO -->
+			<script type="text/javascript" src="js/questionApp.js"></script>
 		</head>
 		<body>
 			<div id="navigation">
