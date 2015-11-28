@@ -2,8 +2,22 @@
 window.onload = function() {
 	//alert("here I am");
 	//console.log("pls love me");
+	refreshNavLinks();
 	addWelcome();
 };
+
+function refreshNavLinks() {
+	var nav = document.getElementById("navigation");
+	var navLinks = nav.lastElementChild.children;
+	console.log(navLinks);
+	var current = window.location.href;
+	console.log(current);
+	for (var i = 0; i < navLinks.length; ++i) {
+		if (current == navLinks[i].lastElementChild.href) {
+			navLinks[i].lastElementChild.className = "disabled";
+		}
+	}
+}
 
 function addWelcome(){
 	var name = getCookie("name");
@@ -12,9 +26,7 @@ function addWelcome(){
 		throw new Error("User's name was not set");
 	}
 	var nav = document.getElementById("navigation");
-	console.log(nav);
-	navList = nav.lastElementChild;
-	console.log(navList);
+	var navList = nav.lastElementChild;
 	var welcome = document.createElement("li");
 	welcome.innerHTML = "Welcome, " + name;
 	
@@ -36,3 +48,4 @@ function getCookie(cName){
 	}
 	return undefined; 
 }
+

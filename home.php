@@ -14,3 +14,4 @@ setcookie("name", $name);
 include("common.php");
 common_head();
 ?>
+

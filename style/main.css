@@ -13,7 +13,7 @@
 /*only li elements inside a ul inside the "navigation" element*/
 #navigation ul li {
 	list-style-type: none; /*no bulletpoints, etc*/
-	display: inline; /*everything goes on one line*/
+	display: inline-block; /*everything goes on one line*/
 }
 
 #navigation ul li:before {
@@ -22,4 +22,10 @@
 
 #navigation li:first-child:before {
 	content: none; /*(this is fence posting)*/
+}
+
+.disabled {
+	pointer-events: none;
+	text-decoration: none;
+	color: Black;
 }
