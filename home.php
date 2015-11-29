@@ -27,7 +27,13 @@ if ($active) {
 		
 	}
 	else { //type == Student?>
-		<p><?=$active?></p>
+		<h1><?=$active?></h1>
+		<div>	
+			<div>Type your question here:</div>
+			<div id="questionError" style="display:none">test</div>
+			<textarea id="questionInput"></textarea>
+			<div><button onclick="submitQuestion()">Submit</button></div>
+		</div>
 	<?php }
 }
 else { ?>

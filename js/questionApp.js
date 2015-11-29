@@ -49,3 +49,38 @@ function getCookie(cName){
 	return undefined; 
 }
 
+function submitQuestion() {
+	var input = document.getElementById("questionInput").value || null;
+	var error = document.getElementById("questionError");
+	
+	if (input) {
+		var popup = createPopup();
+		document.body.appendChild(popup);
+		/*
+		error.style.display = "none"; //hide error message
+		xhttp.open("POST", "processQ", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("question"=input);
+		xhttp.onreadystatechange = function() {
+			
+		}
+		*/
+	}
+	else {
+		error.innerHTML = "Please enter a question first.";
+		error.style.display = "block"; //show error message
+	}
+}
+
+function createPopup() {
+	var popup = document.createElement("DIV");
+	popup.className = "blackOverlay";
+	popup.onclick = function() {
+		this.style.display = "none";
+	}
+	
+	var prompt = document.createElement("DIV");
+	prompt.className = "whitePrompt";
+	popup.appendChild(prompt);
+	return popup;
+}
