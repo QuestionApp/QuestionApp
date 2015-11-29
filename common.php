@@ -13,13 +13,17 @@ function common_head() { ?>
 		<body>
 			<div id="navigation">
 				<ul>
-					<li><a href="/questionapp/home.php">Home</a></li>
-					<li><a href="/questionapp/myQuestions.php">My Questions</a></li>
-					<li><a href="/questionapp/settings.php">Settings</a></li>
-					<li><a href="/questionapp/help.php">Help</a></li>
-					<li><a href="/questionapp/logout.php">Logout</a></li>
+					<li><a href="home.php">Home</a></li>
+					<li><a href="myQuestions.php">My Questions</a></li>
+					<li><a href="settings.php">Settings</a></li>
+					<li><a href="help.php">Help</a></li>
+					<li><a href="logout.php">Logout</a></li>
 				</ul>
 			</div>
+<?php }
+
+function common_foot() { ?>
+			<div id="foot">QuestionApp is a working title</div>
 		</body>
 	</html>
 <?php } ?>

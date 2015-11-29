@@ -2,6 +2,7 @@
 
 #navigation {
 	float: right;
+	display: block;
 }
 
 /*only ul elements inside the element tagged "navigation"*/
@@ -28,4 +29,8 @@
 	pointer-events: none;
 	text-decoration: none;
 	color: Black;
+}
+
+#homeClasses {
+	clear: both; /* moves down until it isnt sharing space with anything */
 }
