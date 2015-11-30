@@ -9,9 +9,8 @@ window.onload = function() {
 function refreshNavLinks() {
 	var nav = document.getElementById("navigation");
 	var navLinks = nav.lastElementChild.children;
-	console.log(navLinks);
 	var current = window.location.href;
-	console.log(current);
+	
 	for (var i = 0; i < navLinks.length; ++i) {
 		if (current == navLinks[i].lastElementChild.href) {
 			navLinks[i].lastElementChild.className = "disabled";
@@ -54,17 +53,16 @@ function submitQuestion() {
 	var error = document.getElementById("questionError");
 	
 	if (input) {
+		error.style.display = "none"; //hide error message
 		var popup = createPopup();
 		document.body.appendChild(popup);
-		/*
-		error.style.display = "none"; //hide error message
-		xhttp.open("POST", "processQ", true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("question"=input);
-		xhttp.onreadystatechange = function() {
-			
-		}
-		*/
+		popupLoading();
+		
+		var data = "question=" + input;
+		XMLRequest("processQ.php", data, function(xhttp) {
+			popup.style.display = "none";
+			console.log("success!");			
+		});
 	}
 	else {
 		error.innerHTML = "Please enter a question first.";
@@ -72,15 +70,42 @@ function submitQuestion() {
 	}
 }
 
+//does a POST request to the target url and gives it the callback function
+function XMLRequest(url, postData, callback) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				callback(xhttp);
+			}
+			else if (xhttp.status == 404){
+				console.log("page not found");
+				console.log(xhttp.readyState);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(postData);	
+}
+
 function createPopup() {
+	if (document.getElementById("blackOverlay")) {
+		document.body.removeChild(document.getElementById("blackOverlay"));
+	}
 	var popup = document.createElement("DIV");
-	popup.className = "blackOverlay";
+	popup.id = "blackOverlay";
 	popup.onclick = function() {
-		this.style.display = "none";
+		this.style.display = "none"; //the popup dissapears when clicked on
 	}
 	
 	var prompt = document.createElement("DIV");
-	prompt.className = "whitePrompt";
+	prompt.id = "whitePrompt";
 	popup.appendChild(prompt);
 	return popup;
+}
+
+function popupLoading() {
+	var prompt = document.getElementById("whitePrompt");
+	loading = document.createElement("IMG");
+	loading.src = "images/ajax-loader.gif";
+	prompt.appendChild(loading);
 }

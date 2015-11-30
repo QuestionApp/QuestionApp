@@ -3,7 +3,7 @@
 	clear: both; /* moves down until it isnt sharing space with anything */
 }
 
-.blackOverlay {
+#blackOverlay {
 	position: fixed;
 	left: 0%;
 	top: 0%;
@@ -16,7 +16,7 @@
 	
 }
 
-.whitePrompt {
+#whitePrompt {
 	position: fixed;
 	background: white;
 	left: 50%;

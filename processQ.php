@@ -5,9 +5,9 @@ if (!isset($_SESSION["name"])) {
 	die();
 }
 include("common.php");
-common_head();
+//common_head();
 
 print(htmlentities($_POST["question"]));
 
-common_foot();
+//common_foot();
 ?>
