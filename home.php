@@ -49,6 +49,47 @@ else { ?>
 			<?php }
 		}
 }
+
+$servername = "localhost";
+$username = "questionapp";
+$password = "questionapp1234";
+$db = "questionapp";
+
+$conn = mysqli_connect($servername, $username, $password, $db);
+
+if (!$conn) {
+	die("Connection failed: " . mysqli_connect_error());
+}
+
+echo "Success! <br />";
+
+$sql = "SELECT * FROM user WHERE userName = \"" . $name . "\"";
+$result = mysqli_query($conn, $sql);
+if ($result) {
+	if (mysqli_num_rows($result) > 0) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			echo "userID: " . $row["userID"] . " Name: " . $row["userName"];
+		}
+	}
+	else {
+		$sql = "INSERT INTO user (userName)
+				VALUES (\"" . $name . "\")";
+		mysqli_query($conn, $sql);
+	}
+}
+else {
+	echo "Error: " . $sql . "<br />" . mysqli_error($conn);
+}
+/*
+if (mysqli_query($conn, $sql)) {
+	echo "New record created successfully";
+}
+else {
+	echo "Error: " . $sql . "<br />" . mysqli_error($conn);
+}
+*/
+mysqli_close($conn);
+
 common_foot();
 ?>
 
