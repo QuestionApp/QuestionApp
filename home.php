@@ -21,6 +21,7 @@ else {
 }
 setcookie("name", $name);
 include("common.php");
+require("configure.php");
 common_head();
 if ($active) {
 	if ($type == "Teacher") {
@@ -50,22 +51,8 @@ else { ?>
 		}
 }
 
-$servername = "localhost";
-$username = "questionapp";
-$password = "questionapp1234";
-$db = "questionapp";
-
-$conn = mysqli_connect($servername, $username, $password, $db);
-
-/*
-$servername = "vergil.u.washington.edu";
-$username = "root";
-$password = "";
-$db = "questionapp";
-$port = 9001;
-
 $conn = mysqli_connect($servername, $username, $password, $db, $port);
-*/
+
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
