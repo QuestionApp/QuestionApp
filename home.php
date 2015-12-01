@@ -57,37 +57,52 @@ $db = "questionapp";
 
 $conn = mysqli_connect($servername, $username, $password, $db);
 
+/*
+$servername = "vergil.u.washington.edu";
+$username = "root";
+$password = "";
+$db = "questionapp";
+$port = 9001;
+
+$conn = mysqli_connect($servername, $username, $password, $db, $port);
+*/
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-echo "Success! <br />";
-
-$sql = "SELECT * FROM user WHERE userName = \"" . $name . "\"";
+$sql = "SELECT * FROM user WHERE userName = \"$name\"";
 $result = mysqli_query($conn, $sql);
 if ($result) {
-	if (mysqli_num_rows($result) > 0) {
+	if (mysqli_num_rows($result) > 0) { /*person exists*/
+		/*
 		while ($row = mysqli_fetch_assoc($result)) {
 			echo "userID: " . $row["userID"] . " Name: " . $row["userName"];
 		}
+		*/
 	}
-	else {
+	else { /*add the new person*/
 		$sql = "INSERT INTO user (userName)
-				VALUES (\"" . $name . "\")";
+				VALUES (\"$name\")";
 		mysqli_query($conn, $sql);
+		$id = mysqli_insert_id($conn);
+		
+		$sql = "INSERT INTO usertype (userID, type)
+				VALUES ($id, \"$type\");";
+		
+		foreach (array_keys($classes) as $class) {
+			$sql .= "INSERT INTO attending (userID, title)
+					 VALUES ($id, \"$class\");";
+		}
+		
+		if(!mysqli_multi_query($conn, $sql)) {
+			echo mysqli_error($conn);
+		}
 	}
 }
 else {
-	echo "Error: " . $sql . "<br />" . mysqli_error($conn);
+	echo "Error: $sql <br />" . mysqli_error($conn);
 }
-/*
-if (mysqli_query($conn, $sql)) {
-	echo "New record created successfully";
-}
-else {
-	echo "Error: " . $sql . "<br />" . mysqli_error($conn);
-}
-*/
+
 mysqli_close($conn);
 
 common_foot();
