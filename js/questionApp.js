@@ -56,13 +56,16 @@ function submitQuestion() {
 		error.style.display = "none"; //hide error message
 		var popup = createPopup();
 		document.body.appendChild(popup);
+		popupVerify();
+		/*
 		popupLoading();
 		
 		var data = "question=" + input;
 		XMLRequest("processQ.php", data, function(xhttp) {
 			popup.style.display = "none";
-			console.log("success!");			
+			console.log(xhttp.responseText);			
 		});
+		*/
 	}
 	else {
 		error.innerHTML = "Please enter a question first.";
@@ -109,3 +112,19 @@ function popupLoading() {
 	loading.src = "images/ajax-loader.gif";
 	prompt.appendChild(loading);
 }
+
+function popupVerify() {
+	var prompt = document.getElementById("whitePrompt");
+	var title = document.createElement("P");
+	title.innerHTML = "Did you mean...?";
+	var questionScroll = document.createElement("DIV");
+	questionScroll.id = "scrollMenu";
+	questionScroll.innerHTML = "<p>a</p><p>b</p><p>c</p><p>d</p><p>a</p><p>b</p><p>c</p><p>d</p><p>a</p><p>b</p><p>c</p><p>d</p>";
+	var continueB = document.createElement("P");
+	continueB.innerHTML = "<button>No, post my question.</button>"
+	
+	prompt.appendChild(title);
+	prompt.appendChild(questionScroll);
+	prompt.appendChild(continueB);
+}
+

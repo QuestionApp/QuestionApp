@@ -4,10 +4,41 @@ if (!isset($_SESSION["name"])) {
 	header("Location: home.php");
 	die();
 }
+else {
+	$name = $_SESSION["name"];	
+	$class = $_SESSION["active"];
+}
 include("common.php");
+require("configure.php");
 //common_head();
 
-print(htmlentities($_POST["question"]));
 
-//common_foot();
+if ($_POST["question"] == null) {
+	die("Error: Question not found.");
+}
+
+$conn = mysqli_connect($servername, $username, $password, $db, $port);
+
+$flagged = 0;
+$checked = 0;
+$question = htmlentities($_POST["question"]);
+$postedTime = date("Y-m-d H:i:s");
+
+$sql = "SELECT userID
+		FROM user
+		WHERE user.userName = \"$name\"";
+$result = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+$userID = $result["userID"];
+
+$sql = "INSERT INTO question (userID, flagged, checked, questionContent, timePosted, class) 
+		VALUES ($userID, $flagged, $checked, \"$question\", \"$postedTime\", \"$class\")"; 
+		
+if (mysqli_query($conn, $sql)) {
+	echo "should be good";
+}
+else {
+	echo mysqli_error($conn);
+}
+		
+mysqli_close($conn);
 ?>
