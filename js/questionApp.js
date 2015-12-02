@@ -56,16 +56,20 @@ function submitQuestion() {
 		error.style.display = "none"; //hide error message
 		var popup = createPopup();
 		document.body.appendChild(popup);
-		popupVerify();
-		/*
-		popupLoading();
-		
-		var data = "question=" + input;
-		XMLRequest("processQ.php", data, function(xhttp) {
-			popup.style.display = "none";
-			console.log(xhttp.responseText);			
-		});
-		*/
+		var continueB = popupVerify();
+		continueB.onclick = function() {
+			popupLoading();
+			
+			var data = "question=" + input;
+			XMLRequest("processQ.php", data, function(xhttp) {
+				if (xhttp.responseText) {
+					popupResult(true);
+				}
+				else {
+					popupResult(false);
+				}
+			});
+		}
 	}
 	else {
 		error.innerHTML = "Please enter a question first.";
@@ -96,9 +100,6 @@ function createPopup() {
 	}
 	var popup = document.createElement("DIV");
 	popup.id = "blackOverlay";
-	popup.onclick = function() {
-		this.style.display = "none"; //the popup dissapears when clicked on
-	}
 	
 	var prompt = document.createElement("DIV");
 	prompt.id = "whitePrompt";
@@ -106,8 +107,40 @@ function createPopup() {
 	return popup;
 }
 
+function hidePopup() {
+	var popup = document.getElementById("blackOverlay");
+	popup.style.display = "none";
+}
+
+function popupResult(success) {
+	var prompt = document.getElementById("whitePrompt");
+	
+	while(prompt.firstChild) {
+		prompt.removeChild(prompt.firstChild);
+	}
+	
+	if (success) {
+		prompt.innerHTML = "cool beans";
+	}
+	else {
+		prompt.innerHTML = "RIP";
+	}
+	
+	var goBack = document.createElement("P");
+	goBack.innerHTML = "<button>Go Back</button>";
+	goBack.onclick = function() {
+		hidePopup();
+	}
+	prompt.appendChild(goBack);
+}
+
 function popupLoading() {
 	var prompt = document.getElementById("whitePrompt");
+	
+	while(prompt.firstChild) {
+		prompt.removeChild(prompt.firstChild);
+	}
+	
 	loading = document.createElement("IMG");
 	loading.src = "images/ajax-loader.gif";
 	prompt.appendChild(loading);
@@ -115,16 +148,28 @@ function popupLoading() {
 
 function popupVerify() {
 	var prompt = document.getElementById("whitePrompt");
+	
 	var title = document.createElement("P");
 	title.innerHTML = "Did you mean...?";
+	
 	var questionScroll = document.createElement("DIV");
 	questionScroll.id = "scrollMenu";
 	questionScroll.innerHTML = "<p>a</p><p>b</p><p>c</p><p>d</p><p>a</p><p>b</p><p>c</p><p>d</p><p>a</p><p>b</p><p>c</p><p>d</p>";
+	
 	var continueB = document.createElement("P");
 	continueB.innerHTML = "<button>No, post my question.</button>"
+	
+	var goBack = document.createElement("P");
+	goBack.innerHTML = "<button>Go Back</button>";
+	goBack.onclick = function() {
+		hidePopup();
+	}
 	
 	prompt.appendChild(title);
 	prompt.appendChild(questionScroll);
 	prompt.appendChild(continueB);
+	prompt.appendChild(goBack);
+	
+	return continueB;
 }
 

@@ -34,10 +34,10 @@ $sql = "INSERT INTO question (userID, flagged, checked, questionContent, timePos
 		VALUES ($userID, $flagged, $checked, \"$question\", \"$postedTime\", \"$class\")"; 
 		
 if (mysqli_query($conn, $sql)) {
-	echo "should be good";
+	echo True;
 }
 else {
-	echo mysqli_error($conn);
+	echo False;
 }
 		
 mysqli_close($conn);
