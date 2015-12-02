@@ -1,23 +1,26 @@
 <?php
 session_start();
 
-if (isset($_SESSION["name"])) {
+if (isset($_SESSION["name"]) && $_SESSION["name"] == $_SERVER["REMOTE_USER"]) {
 	$name = $_SESSION["name"];
 	$type = $_SESSION["type"];
 	$classes = $_SESSION["classes"];
 	$active = $_SESSION["active"];
 }
 else {
-	$_SESSION["name"] = "Shaun";
-	$_SESSION["type"] = "Student"; //can be Student or Teacher
-	$_SESSION["classes"] = ["INFO 200"=>True,
-							"CSE 142"=>True,
-							"MATH 125"=>False];
-	$_SESSION["active"] = "INFO 200";
-	$name = $_SESSION["name"];
-	$type = $_SESSION["type"];
-	$classes = $_SESSION["classes"];
-	$active = $_SESSION["active"];
+	if ($_SERVER["REMOTE_USER"]) {
+		$_SESSION["name"] = $_SERVER["REMOTE_USER"];
+		$_SESSION["type"] = "Student"; //can be Student or Teacher
+		$_SESSION["classes"] = ["INFO 200"=>True,
+								"CSE 142"=>True,
+								"MATH 125"=>False];
+		$_SESSION["active"] = "INFO 200";
+		
+		$name = $_SESSION["name"];
+		$type = $_SESSION["type"];
+		$classes = $_SESSION["classes"];
+		$active = $_SESSION["active"];
+	}
 }
 setcookie("name", $name);
 include("common.php");
