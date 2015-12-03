@@ -18,10 +18,12 @@ body h1, body > div {	/* only the top level div inside body */
 	top: 0%;
 	height: 100%;
 	width: 100%;
-	
-	background-color: Black;
 	z-index: 1;
+	background: url("../images/blackBackground.png");
+	/*
+	background-color: Black;
 	opacity: 0.8;
+	*/
 }
 
 #whitePrompt {
@@ -33,6 +35,7 @@ body h1, body > div {	/* only the top level div inside body */
 	height: 50%;
 	z-index: 2;
 	padding: 5px;
+	opacity: 1;
 }
 
 .disabled {
