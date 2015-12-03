@@ -7,9 +7,16 @@ body {
 	background: linear-gradient(#e8e3d3, white) no-repeat;
 }
 
-body h1, body > div {	/* only the top level div inside body */
+body > h1, body > div {	/* only the top level div inside body */
+	left: 20%;
+	display: initial;
 	position: relative;
-	left: 50%
+}
+
+body div p {
+	margin-bottom: 2px;
+	margin-top: 2px;
+	display: inline;
 }
 
 #blackOverlay {

@@ -32,11 +32,12 @@ if ($active) {
 	}
 	else { //type == Student?>
 		<h1><?=$active?></h1>
+		<br />
 		<div>	
-			<div>Type your question here:</div>
+			<p>Type your question here:</p><br />
 			<div id="questionError" style="display:none">test</div>
-			<textarea id="questionInput"></textarea>
-			<div><button onclick="submitQuestion()">Submit</button></div>
+			<textarea id="questionInput"></textarea><br />
+			<span><button onclick="submitQuestion()">Submit</button></span>
 		</div>
 	<?php }
 }

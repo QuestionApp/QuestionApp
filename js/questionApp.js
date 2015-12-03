@@ -72,8 +72,8 @@ function submitQuestion() {
 		}
 	}
 	else {
-		error.innerHTML = "Please enter a question first.";
-		error.style.display = "block"; //show error message
+		error.innerHTML = "Please enter a question first.<br />";
+		error.style.display = "inline"; //show error message
 	}
 }
 
