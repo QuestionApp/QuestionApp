@@ -13,20 +13,17 @@
 	background-color: Black;
 	z-index: 1;
 	opacity: 0.8;
-	
 }
 
 #whitePrompt {
 	position: fixed;
 	background: white;
+	font-size: large;
 	left: 25%;
 	top: 15%;
 	height: 50%;
-	width: 40%;
 	z-index: 2;
 	padding: 5px;
-	/*overflow-y: auto;
-	*/
 }
 
 .disabled {
@@ -66,8 +63,66 @@
 }
 
 #scrollMenu {
-	height: 50%;
-	width: 100%;
-	overflow: auto;
 	border: 1px solid Black;
+	height: 50%;
+	/*width: 100%;*/
+	overflow: auto;
+	padding: 10px;
 }
+
+#qTable {
+	padding: 5px;
+}
+
+#qTable td {
+	padding-right: 10px;
+	padding-bottom: 10px;
+	vertical-align: top;
+}
+
+#qTable td img {
+	bottom: 10px;
+	content: url("../images/inactiveArrow.png");
+	height: 40px;
+	width: 55px;
+	position: relative;
+}
+
+@-moz-document url-prefix() {
+	#qTable td span::before {
+		content: url("../images/inactiveArrow.png");
+		position: relative;
+	}
+
+}
+
+#qTable td span {
+	bottom: 20px;
+	left: 25px;
+	position: relative;	
+}
+/*
+.qContent {
+	
+}
+
+.qDiv {
+	margin-bottom: 10px;
+}
+
+.vote {
+	position: absolute;
+	content: url("../images/inactiveArrow.png");
+	height: 30px;
+	width: 45px;
+	right: 10px;
+	margin-right: -25px;
+	margin-top: -10px
+}
+
+.weight {
+	position: absolute;
+	right: 10px;
+}
+
+*/

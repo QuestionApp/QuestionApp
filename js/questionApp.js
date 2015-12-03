@@ -77,6 +77,14 @@ function submitQuestion() {
 	}
 }
 
+function populateQuestions(questionScroll) {
+	var data = "amount=10";
+
+	XMLRequest("populateQ.php", data, function(xhttp) {
+		questionScroll.innerHTML = xhttp.responseText;
+	});
+}
+
 //does a POST request to the target url and gives it the callback function
 function XMLRequest(url, postData, callback) {
 		var xhttp = new XMLHttpRequest();
@@ -150,14 +158,14 @@ function popupVerify() {
 	var prompt = document.getElementById("whitePrompt");
 	
 	var title = document.createElement("P");
-	title.innerHTML = "Did you mean...?";
+	title.innerHTML = "What about these:";
 	
 	var questionScroll = document.createElement("DIV");
 	questionScroll.id = "scrollMenu";
-	questionScroll.innerHTML = "<p>a</p><p>b</p><p>c</p><p>d</p><p>a</p><p>b</p><p>c</p><p>d</p><p>a</p><p>b</p><p>c</p><p>d</p>";
+	populateQuestions(questionScroll);
 	
 	var continueB = document.createElement("P");
-	continueB.innerHTML = "<button>No, post my question.</button>"
+	continueB.innerHTML = "<button>Post my question</button>"
 	
 	var goBack = document.createElement("P");
 	goBack.innerHTML = "<button>Go Back</button>";

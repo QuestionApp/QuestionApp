@@ -8,10 +8,8 @@ else {
 	$name = $_SESSION["name"];	
 	$class = $_SESSION["active"];
 }
-include("common.php");
-require("configure.php");
-//common_head();
 
+require("configure.php");
 
 if ($_POST["question"] == null) {
 	die("Error: Question not found.");
@@ -42,3 +40,4 @@ else {
 		
 mysqli_close($conn);
 ?>
+
