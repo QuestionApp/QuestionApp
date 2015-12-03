@@ -3,6 +3,15 @@
 	clear: both; /* moves down until it isnt sharing space with anything */
 }
 
+body {
+	background: linear-gradient(#e8e3d3, white) no-repeat;
+}
+
+body h1, body > div {	/* only the top level div inside body */
+	position: relative;
+	left: 50%
+}
+
 #blackOverlay {
 	position: fixed;
 	left: 0%;
@@ -32,6 +41,10 @@
 	color: Black;
 }
 
+header {
+	padding-bottom: 40px;
+}
+
 #navigation {
 	float: right;
 	display: block;
@@ -57,8 +70,8 @@
 	content: none; /*(this is fence posting)*/
 }
 
-#foot {
-	position: fixed;
+footer {
+	position: absolute;
 	bottom: 0;
 }
 

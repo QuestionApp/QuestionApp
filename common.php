@@ -11,19 +11,22 @@ function common_head() { ?>
 			<script type="text/javascript" src="js/questionApp.js"></script>
 		</head>
 		<body>
-			<div id="navigation">
-				<ul>
-					<li><a href="home.php">Home</a></li>
-					<li><a href="myQuestions.php">My Questions</a></li>
-					<li><a href="settings.php">Settings</a></li>
-					<li><a href="help.php">Help</a></li>
-					<li><a href="logout.php">Logout</a></li>
-				</ul>
-			</div>
+			<header>
+				<img src="images/fullLogo.png"></img>
+				<div id="navigation">
+					<ul>
+						<li><a href="home.php">Home</a></li>
+						<li><a href="myQuestions.php">My Questions</a></li>
+						<li><a href="settings.php">Settings</a></li>
+						<li><a href="help.php">Help</a></li>
+						<li><a href="logout.php">Logout</a></li>
+					</ul>
+				</div>
+			</header>
 <?php }
 
 function common_foot() { ?>
-			<div id="foot">QuestionApp is a working title</div>
+			<footer>Question Master 2015</footer>
 		</body>
 	</html>
 <?php } ?>
