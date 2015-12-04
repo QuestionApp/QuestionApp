@@ -1,7 +1,5 @@
 //JS file for QuestionApp (working title)
 window.onload = function() {
-	//alert("here I am");
-	//console.log("pls love me");
 	refreshNavLinks();
 	addWelcome();
 };
@@ -60,7 +58,7 @@ function submitQuestion() {
 		var continueB = popupVerify();
 		
 		continueB.onclick = function() {
-			loading("whitePrompt");
+			loadingIMG("whitePrompt");
 			
 			var data = "question=" + input;
 			XMLRequest("processQ.php", data, function(xhttp) {
@@ -92,7 +90,7 @@ function popupVerify() {
 	populateQuestions();
 	
 	var continueB = document.createElement("DIV");
-	continueB.innerHTML = "<button>Post my question</button>"
+	continueB.innerHTML = "<button>Post my question</button>";
 	
 	var goBack = document.createElement("DIV");
 	goBack.innerHTML = "<button>Go Back</button>";
@@ -109,7 +107,8 @@ function popupVerify() {
 function populateQuestions() {
 	var data = "amount=10";
 	questionScroll = document.getElementById("scrollMenu");
-	loading("scrollMenu");
+	
+	loadingIMG("scrollMenu");
 	
 	XMLRequest("populateQ.php", data, function(xhttp) {
 		questionScroll.innerHTML = xhttp.responseText;
@@ -213,7 +212,7 @@ function popupResult(success) {
 
 //Removes all children from element of given ID 
 //and then places a loading gif image
-function loading(id) {
+function loadingIMG(id) {
 	var prompt = document.getElementById(id);
 	if (prompt) {
 		while(prompt.firstChild) {
@@ -228,3 +227,6 @@ function loading(id) {
 		console.log("loading passed bad id");
 	}
 }
+
+
+
