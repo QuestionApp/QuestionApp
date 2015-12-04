@@ -35,7 +35,7 @@ if ($active) {
 		<br />
 		<div>	
 			<p>Type your question here:</p><br />
-			<div id="questionError" style="display:none">test</div>
+			<div id="questionError">test</div>
 			<textarea id="questionInput"></textarea><br />
 			<span><button onclick="submitQuestion()">Submit</button></span>
 		</div>

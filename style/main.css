@@ -7,6 +7,14 @@ body {
 	background: linear-gradient(#e8e3d3, white) no-repeat;
 }
 
+h1 {
+	font-size: 50px;
+}
+
+p, span, li {
+	font-size: 25px; 
+}
+
 body > h1, body > div {	/* only the top level div inside body */
 	left: 20%;
 	display: initial;
@@ -17,6 +25,11 @@ body div p {
 	margin-bottom: 2px;
 	margin-top: 2px;
 	display: inline;
+}
+
+#questionInput {
+	height: 144px;
+	width: 394px;
 }
 
 #blackOverlay {
@@ -56,8 +69,7 @@ header {
 }
 
 #navigation {
-	float: right;
-	display: block;
+	/*float: right;*/
 }
 
 /*only ul elements inside the element tagged "navigation"*/
@@ -85,6 +97,11 @@ footer {
 	bottom: 0;
 }
 
+#questionError {
+	display: none;
+	color: red;
+}
+
 #scrollMenu {
 	border: 1px solid Black;
 	height: 50%;
@@ -105,18 +122,9 @@ footer {
 
 #qTable td img {
 	bottom: 10px;
-	content: url("../images/inactiveArrow.png");
 	height: 40px;
 	width: 55px;
 	position: relative;
-}
-
-@-moz-document url-prefix() {
-	#qTable td span::before {
-		content: url("../images/inactiveArrow.png");
-		position: relative;
-	}
-
 }
 
 #qTable td span {
@@ -124,28 +132,3 @@ footer {
 	left: 25px;
 	position: relative;	
 }
-/*
-.qContent {
-	
-}
-
-.qDiv {
-	margin-bottom: 10px;
-}
-
-.vote {
-	position: absolute;
-	content: url("../images/inactiveArrow.png");
-	height: 30px;
-	width: 45px;
-	right: 10px;
-	margin-right: -25px;
-	margin-top: -10px
-}
-
-.weight {
-	position: absolute;
-	right: 10px;
-}
-
-*/

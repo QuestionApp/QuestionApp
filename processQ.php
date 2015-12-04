@@ -26,18 +26,22 @@ $sql = "SELECT userID
 		FROM user
 		WHERE user.userName = \"$name\"";
 $result = mysqli_fetch_assoc(mysqli_query($conn, $sql));
-$userID = $result["userID"];
+if ($result) {
+	$userID = $result["userID"];
 
-$sql = "INSERT INTO question (userID, flagged, checked, questionContent, timePosted, class) 
-		VALUES ($userID, $flagged, $checked, \"$question\", \"$postedTime\", \"$class\")"; 
-		
-if (mysqli_query($conn, $sql)) {
-	echo True;
+	$sql = "INSERT INTO question (userID, flagged, checked, questionContent, timePosted, class) 
+			VALUES ($userID, $flagged, $checked, \"$question\", \"$postedTime\", \"$class\")"; 
+			
+	if (mysqli_query($conn, $sql)) {
+		echo True;
+	}
+	else {
+		echo False;
+	}
 }
 else {
-	echo False;
-}
-		
+	return False;
+}	
 mysqli_close($conn);
 ?>
 

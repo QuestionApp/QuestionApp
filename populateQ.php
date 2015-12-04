@@ -34,13 +34,6 @@ if ($result) {
 	echo "<table id=\"qTable\">";
 	$row = mysqli_fetch_assoc($result);
 	while ($row && $i < $amount) {	
-		/*
-		echo "<div class=\"qDiv\" id=\"q" . $row["questionID"] . "\">";
-		echo "<span class=\"qContent\">" . $row["questionContent"] . "</span>";
-		echo "<img class=\"vote\"></img>";
-		echo "<span class=\"weight\">" . $row["weight"] . "</span>";
-		echo "</div>";
-		*/
 		echo "<tr id=\"q".$row["questionID"]."\"><td>"
 		.$row["questionContent"]."</td><td><img class=\"vote\"></img><span class=\"weight\">"
 		.$row["weight"]."</span></td></tr>";		
@@ -56,3 +49,5 @@ else {
 
 mysqli_close($conn);
 ?>
+
+

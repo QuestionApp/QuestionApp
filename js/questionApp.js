@@ -56,9 +56,11 @@ function submitQuestion() {
 		error.style.display = "none"; //hide error message
 		var popup = createPopup();
 		document.body.appendChild(popup);
+		
 		var continueB = popupVerify();
+		
 		continueB.onclick = function() {
-			popupLoading();
+			loading("whitePrompt");
 			
 			var data = "question=" + input;
 			XMLRequest("processQ.php", data, function(xhttp) {
@@ -77,12 +79,76 @@ function submitQuestion() {
 	}
 }
 
-function populateQuestions(questionScroll) {
-	var data = "amount=10";
+function popupVerify() {
+	var prompt = document.getElementById("whitePrompt");
+	
+	var title = document.createElement("P");
+	title.innerHTML = "What about these:";
+	prompt.appendChild(title);
+	
+	var questionScroll = document.createElement("DIV");
+	questionScroll.id = "scrollMenu";
+	prompt.appendChild(questionScroll);
+	populateQuestions();
+	
+	var continueB = document.createElement("DIV");
+	continueB.innerHTML = "<button>Post my question</button>"
+	
+	var goBack = document.createElement("DIV");
+	goBack.innerHTML = "<button>Go Back</button>";
+	goBack.onclick = function() {
+		hidePopup();
+	}
+	prompt.appendChild(goBack);
+	
+	prompt.appendChild(continueB);
+	
+	return continueB;
+}
 
+function populateQuestions() {
+	var data = "amount=10";
+	questionScroll = document.getElementById("scrollMenu");
+	loading("scrollMenu");
+	
 	XMLRequest("populateQ.php", data, function(xhttp) {
 		questionScroll.innerHTML = xhttp.responseText;
+		populateVotes();
 	});
+}
+
+function populateVotes() {
+	var allVotes = document.getElementsByClassName("vote");
+
+	for (var i = 0; i < allVotes.length; i++) {
+		allVotes[i].src = "images/inactiveArrow.png";
+		allVotes[i].onclick = function() {
+			handleVote(this.parentElement.parentElement.id);
+			console.log("beeP");
+		}
+	}
+}
+
+function handleVote(qID) {
+	id = qID.substring(1, qID.length);
+	data = "qID=" + id;
+	XMLRequest("addWeight.php", data, function(xhttp) {
+		if (xhttp.responseText == 1) {
+			makeVoted(qID);
+		}
+		else {
+			console.log(xhttp.responseText);
+		}
+	});
+}
+
+function makeVoted(qID) {
+	var question = document.getElementById(qID);
+	var vote = question.lastElementChild.firstChild;
+	var weight = question.lastElementChild.lastChild;
+	weight.innerHTML = parseInt(weight.innerHTML) + 1;
+	vote.src = "images/activeArrow.png";
+	vote.onclick = null;
 }
 
 //does a POST request to the target url and gives it the callback function
@@ -95,6 +161,9 @@ function XMLRequest(url, postData, callback) {
 			else if (xhttp.status == 404){
 				console.log("page not found");
 				console.log(xhttp.readyState);
+			}
+			else {
+				
 			}
 		};
 		xhttp.open("POST", url, true);
@@ -142,42 +211,20 @@ function popupResult(success) {
 	prompt.appendChild(goBack);
 }
 
-function popupLoading() {
-	var prompt = document.getElementById("whitePrompt");
-	
-	while(prompt.firstChild) {
-		prompt.removeChild(prompt.firstChild);
+//Removes all children from element of given ID 
+//and then places a loading gif image
+function loading(id) {
+	var prompt = document.getElementById(id);
+	if (prompt) {
+		while(prompt.firstChild) {
+			prompt.removeChild(prompt.firstChild);
+		}
+		
+		loading = document.createElement("IMG");
+		loading.src = "images/ajax-loader.gif";
+		prompt.appendChild(loading);
 	}
-	
-	loading = document.createElement("IMG");
-	loading.src = "images/ajax-loader.gif";
-	prompt.appendChild(loading);
-}
-
-function popupVerify() {
-	var prompt = document.getElementById("whitePrompt");
-	
-	var title = document.createElement("P");
-	title.innerHTML = "What about these:";
-	
-	var questionScroll = document.createElement("DIV");
-	questionScroll.id = "scrollMenu";
-	populateQuestions(questionScroll);
-	
-	var continueB = document.createElement("P");
-	continueB.innerHTML = "<button>Post my question</button>"
-	
-	var goBack = document.createElement("P");
-	goBack.innerHTML = "<button>Go Back</button>";
-	goBack.onclick = function() {
-		hidePopup();
+	else {
+		console.log("loading passed bad id");
 	}
-	
-	prompt.appendChild(title);
-	prompt.appendChild(questionScroll);
-	prompt.appendChild(continueB);
-	prompt.appendChild(goBack);
-	
-	return continueB;
 }
-
