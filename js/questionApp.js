@@ -123,7 +123,7 @@ function populateVotes() {
 		allVotes[i].src = "images/inactiveArrow.png";
 		allVotes[i].onclick = function() {
 			handleVote(this.parentElement.parentElement.id);
-			console.log("beeP");
+			this.onclick = null;
 		}
 	}
 }
@@ -147,7 +147,6 @@ function makeVoted(qID) {
 	var weight = question.lastElementChild.lastChild;
 	weight.innerHTML = parseInt(weight.innerHTML) + 1;
 	vote.src = "images/activeArrow.png";
-	vote.onclick = null;
 }
 
 //does a POST request to the target url and gives it the callback function
@@ -196,10 +195,10 @@ function popupResult(success) {
 	}
 	
 	if (success) {
-		prompt.innerHTML = "cool beans";
+		prompt.innerHTML = "<img src=\"images/check.png\"></img>";
 	}
 	else {
-		prompt.innerHTML = "RIP";
+		prompt.innerHTML = "<img src=\"images/X.png\"></img>";
 	}
 	
 	var goBack = document.createElement("P");
