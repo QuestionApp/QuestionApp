@@ -1,9 +1,12 @@
 //JS file for QuestionApp (working title)
+//whenever a new page loads, refresh the navigation bar
 window.onload = function() {
 	refreshNavLinks();
 	addWelcome();
 };
 
+//ensures that the navigation bar will not provide a link
+//to the current page
 function refreshNavLinks() {
 	var nav = document.getElementById("navigation");
 	var navLinks = nav.lastElementChild.children;
@@ -16,9 +19,10 @@ function refreshNavLinks() {
 	}
 }
 
+//adds a welcome message for whoever is in-session to the navigation bar
 function addWelcome(){
 	var name = getCookie("name");
-	//alert(name);
+
 	if (!name) {	//in case this is called without the cookie being set
 		throw new Error("User's name was not set");
 	}
@@ -31,6 +35,7 @@ function addWelcome(){
 	
 }
 
+//gets the contents of a cookie of the given name
 //cookies come from document.cookie in the form of:
 //"cookie1=value; cookie2=value; ..."
 function getCookie(cName){
@@ -46,20 +51,23 @@ function getCookie(cName){
 	return undefined; 
 }
 
+//called when a studen presses the submit button on the home page
+//if input was given, create the questions popup, otherwise display error
 function submitQuestion() {
 	var input = document.getElementById("questionInput").value || null;
 	var error = document.getElementById("questionError");
 	
 	if (input) {
 		error.style.display = "none"; //hide error message
-		var popup = createPopup();
-		document.body.appendChild(popup);
+		createPopup();
 		
+		//the button to proceed with posting the question
 		var continueB = popupVerify();
 		
 		continueB.onclick = function() {
 			loadingIMG("whitePrompt");
 			
+			//process the question with processQ.php
 			var data = "question=" + input;
 			XMLRequest("processQ.php", data, function(xhttp) {
 				if (xhttp.responseText) {
@@ -77,6 +85,10 @@ function submitQuestion() {
 	}
 }
 
+//sets up a whitePrompt for verifying if a student wants to
+//post their question
+//assumes a whitePrompt element is available for use
+//returns the continue posting button so action can be added to it
 function popupVerify() {
 	var prompt = document.getElementById("whitePrompt");
 	
@@ -87,7 +99,9 @@ function popupVerify() {
 	var questionScroll = document.createElement("DIV");
 	questionScroll.id = "scrollMenu";
 	prompt.appendChild(questionScroll);
-	populateQuestions();
+	
+	//puts questions in the questionScroll 
+	populateQuestions(10, "null");
 	
 	var continueB = document.createElement("DIV");
 	continueB.innerHTML = "<button>Post my question</button>";
@@ -104,18 +118,24 @@ function popupVerify() {
 	return continueB;
 }
 
-function populateQuestions() {
-	var data = "amount=10";
+//calls a php file to get questions related to the class chosen
+//from the database in format that is directly placed into the
+//questionScroll HTML
+function populateQuestions(amount, classChosen) {
+	var data = "amount=" + amount + "&class=" + classChosen;
 	questionScroll = document.getElementById("scrollMenu");
 	
 	loadingIMG("scrollMenu");
 	
+	//get questions related to class and amount
 	XMLRequest("populateQ.php", data, function(xhttp) {
 		questionScroll.innerHTML = xhttp.responseText;
 		populateVotes();
 	});
 }
 
+//assumes all elements of class "vote" are img elements
+//and gives them the inactive arrow picture and a click action 
 function populateVotes() {
 	var allVotes = document.getElementsByClassName("vote");
 
@@ -128,6 +148,7 @@ function populateVotes() {
 	}
 }
 
+//tells the server that a certain question has been upvoted
 function handleVote(qID) {
 	id = qID.substring(1, qID.length);
 	data = "qID=" + id;
@@ -141,6 +162,7 @@ function handleVote(qID) {
 	});
 }
 
+//updates the question's vote element to show its been upvoted
 function makeVoted(qID) {
 	var question = document.getElementById(qID);
 	var vote = question.lastElementChild.firstChild;
@@ -169,6 +191,7 @@ function XMLRequest(url, postData, callback) {
 		xhttp.send(postData);	
 }
 
+//creates a new Popup, consisting of a blackOverlay and whitePrompt
 function createPopup() {
 	if (document.getElementById("blackOverlay")) {
 		document.body.removeChild(document.getElementById("blackOverlay"));
@@ -179,14 +202,18 @@ function createPopup() {
 	var prompt = document.createElement("DIV");
 	prompt.id = "whitePrompt";
 	popup.appendChild(prompt);
-	return popup;
+	
+	document.body.appendChild(popup);
 }
 
+//hides the Popup
 function hidePopup() {
 	var popup = document.getElementById("blackOverlay");
 	popup.style.display = "none";
 }
 
+//puts a success or failure image in the Popup based
+//on the boolean parameter 
 function popupResult(success) {
 	var prompt = document.getElementById("whitePrompt");
 	

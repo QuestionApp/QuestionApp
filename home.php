@@ -25,6 +25,9 @@ else {
 setcookie("name", $name);
 include("common.php");
 require("configure.php");
+
+$newUser = saveUser($servername, $username, $password, $db, $port, $name, $type, $classes);
+
 common_head();
 if ($active) {
 	if ($type == "Teacher") {
@@ -41,60 +44,66 @@ if ($active) {
 	<?php }
 }
 else { ?>
-	<div id="homeClasses">
-		<span>Your Classes</span>
+	<div id="homeClasses" class="menu">
+		<h2>Your Classes</h2>
 		<?php
 		foreach (array_keys($classes) as $class) { 
 			if ($classes[$class]) { ?>
-				<p><a href="#"><?=$class?></a></p>
+				<p><a onclick="streamClass(<?=$class?>)" href="#"><?=$class?></a></p>
 			<?php }
 			else { ?>
 				<p><?=$class?></p>
 			<?php }
-		}
-}
+		}?>
+	</div>
+<?php }
 
-$conn = mysqli_connect($servername, $username, $password, $db, $port);
+function saveUser($servername, $username, $password, $db, $port, $name, $type, $classes) {
+	$conn = mysqli_connect($servername, $username, $password, $db, $port);
 
-if (!$conn) {
-	die("Connection failed: " . mysqli_connect_error());
-}
-
-$sql = "SELECT * FROM user WHERE userName = \"$name\"";
-$result = mysqli_query($conn, $sql);
-if ($result) {
-	if (mysqli_num_rows($result) > 0) { /*person exists*/
-		/*
-		while ($row = mysqli_fetch_assoc($result)) {
-			echo "userID: " . $row["userID"] . " Name: " . $row["userName"];
-		}
-		*/
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
 	}
-	else { /*add the new person*/
-		$sql = "INSERT INTO user (userName)
-				VALUES (\"$name\")";
-		mysqli_query($conn, $sql);
-		$id = mysqli_insert_id($conn);
-		
-		$sql = "INSERT INTO usertype (userID, type)
-				VALUES ($id, \"$type\");";
-		
-		foreach (array_keys($classes) as $class) {
-			$sql .= "INSERT INTO attending (userID, title)
-					 VALUES ($id, \"$class\");";
+
+	$sql = "SELECT * FROM user WHERE userName = \"$name\"";
+	$result = mysqli_query($conn, $sql);
+	if ($result) {
+		if (mysqli_num_rows($result) > 0) { /*person exists*/
+			return true;
+			/*
+			while ($row = mysqli_fetch_assoc($result)) {
+				echo "userID: " . $row["userID"] . " Name: " . $row["userName"];
+			}
+			*/
 		}
-		
-		if(!mysqli_multi_query($conn, $sql)) {
-			echo mysqli_error($conn);
+		else { /*add the new person*/
+			$sql = "INSERT INTO user (userName)
+					VALUES (\"$name\")";
+			mysqli_query($conn, $sql);
+			$id = mysqli_insert_id($conn);
+			
+			$sql = "INSERT INTO usertype (userID, type)
+					VALUES ($id, \"$type\");";
+			
+			foreach (array_keys($classes) as $class) {
+				$sql .= "INSERT INTO attending (userID, title)
+						 VALUES ($id, \"$class\");";
+			}
+			
+			if(!mysqli_multi_query($conn, $sql)) {
+				mysqli_close($conn);
+				die("Error: " . mysqli_error($conn));
+			}
+			
+			return False;
 		}
 	}
-}
-else {
-	echo "Error: $sql <br />" . mysqli_error($conn);
-}
+	else {
+		mysqli_close($conn);
+		die("Error: " . mysqli_error($conn));
+	}
 
-mysqli_close($conn);
-
+}
 common_foot();
 ?>
 

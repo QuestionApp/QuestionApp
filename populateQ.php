@@ -1,4 +1,8 @@
 <?php
+/*
+echoes, in table format, all questions of the active class,
+or all questions of a given class if provided
+*/
 session_start();
 if (!isset($_SESSION["name"])) {
 	header("Location: home.php");
@@ -13,6 +17,10 @@ require("configure.php");
 
 if ($_POST["amount"] == null) {
 	die("Error: Amount not found.");
+}
+
+if ($_POST["class"] != "null") {
+	$class = $_POST["class"];
 }
 
 $amount = $_POST["amount"];
