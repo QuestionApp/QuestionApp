@@ -51,14 +51,32 @@ function getCookie(cName){
 	return undefined; 
 }
 
+//populate a questionStream with instructor permissions for the currentClass
 function questionStreamInstructor(currentClass) {
+	var title = document.createElement("H1");
+	title.innerHTML = currentClass
+	
 	var questionStream = document.createElement("DIV");
 	questionStream.id = "questionStream";
-	populateQuestions(10, "null", true);
+	
+	var questionScroll = document.createElement("DIV");
+	questionScroll.id = "scrollMenu";
+	
+	var content = document.getElementById("content");
+	
+	while(content.firstChild) {
+		content.removeChild(content.firstChild);
+	}
+	
+	content.appendChild(title);
+	questionStream.appendChild(questionScroll);
+	content.appendChild(questionStream);
+	
+	populateQuestions(10, "null", 1);
 	
 }
 
-//called when a studen presses the submit button on the home page
+//called when a student presses the submit button on the home page
 //if input was given, create the questions popup, otherwise display error
 function submitQuestion() {
 	var input = document.getElementById("questionInput").value || null;
@@ -129,7 +147,7 @@ function popupVerify() {
 //from the database in format that is directly placed into the
 //questionScroll HTML
 function populateQuestions(amount, classChosen, isInstructor) {
-	isInstructor = isInstructor || false;
+	isInstructor = isInstructor || 0;
 	
 	var data = 	"amount=" + amount + "&class=" + classChosen 
 				+ "&isInstructor=" + isInstructor;
@@ -140,7 +158,10 @@ function populateQuestions(amount, classChosen, isInstructor) {
 	if (isInstructor) {
 		//get questions related to class and amount for istructor
 		XMLRequest("populateQ.php", data, function(xhttp) {
-			console.log(xhttp.responseText);
+			questionScroll.innerHTML = xhttp.responseText;
+			populateVotes();
+			populateChecks();
+			populateFlags();
 		});
 	}
 	else {
@@ -152,6 +173,19 @@ function populateQuestions(amount, classChosen, isInstructor) {
 	}
 }
 
+function populateFlags() {
+	var allFlags = document.getElementsByClassName("flag");
+
+	for (var i = 0; i < allFlags.length; i++) {
+		allFlags[i].src = "images/inactiveFlag.png";
+		allFlags[i].onclick = function() {
+			this.onclick = null;
+			this.src = "images/activeFlag.png";
+			handleFlag(this.parentElement.parentElement.id);
+		}
+	}
+}
+
 //assumes all elements of class "vote" are img elements
 //and gives them the inactive arrow picture and a click action 
 function populateVotes() {
@@ -160,8 +194,35 @@ function populateVotes() {
 	for (var i = 0; i < allVotes.length; i++) {
 		allVotes[i].src = "images/inactiveArrow.png";
 		allVotes[i].onclick = function() {
-			handleVote(this.parentElement.parentElement.id);
 			this.onclick = null;
+			handleVote(this.parentElement.parentElement.id);
+		}
+	}
+}
+
+//assumes all elements of class "check" are img elements
+//and gives them the inactive check picture
+//hovering and clicking cause the image to change
+function populateChecks() {
+	var allChecks = document.getElementsByClassName("check");
+
+	for (var i = 0; i < allChecks.length; i++) {
+		allChecks[i].src = "images/inactiveCheck.png";
+		
+		allChecks[i].onmouseenter = function() {
+			this.src = "images/hoverCheck.png";
+		}
+		
+		allChecks[i].onmouseleave = function() {
+			this.src = "images/inactiveCheck.png";
+		}
+		
+		allChecks[i].onclick = function() {
+			this.onclick = null;
+			this.onmouseenter = null;
+			this.onmouseleave = null;
+			this.src = "images/activeCheck.png";
+			handleCheck(this.parentElement.parentElement.id);
 		}
 	}
 }
@@ -183,8 +244,8 @@ function handleVote(qID) {
 //updates the question's vote element to show its been upvoted
 function makeVoted(qID) {
 	var question = document.getElementById(qID);
-	var vote = question.lastElementChild.firstChild;
-	var weight = question.lastElementChild.lastChild;
+	var vote = question.getElementsByClassName("vote")[0];
+	var weight = vote.parentElement.lastElementChild;
 	weight.innerHTML = parseInt(weight.innerHTML) + 1;
 	vote.src = "images/activeArrow.png";
 }

@@ -23,13 +23,6 @@ if ($_POST["class"] != "null") {
 	$class = $_POST["class"];
 }
 
-if ($_POST["isInstructor"]) {
-	echo "hi";
-}
-else {
-	echo "hibad";
-}
-
 $amount = $_POST["amount"];
 
 $conn = mysqli_connect($servername, $username, $password, $db, $port);
@@ -46,17 +39,35 @@ $result = mysqli_query($conn, $sql);
 if ($result) {
 	$i = 0;
 	
-	echo "<table id=\"qTable\">";
-	$row = mysqli_fetch_assoc($result);
-	while ($row && $i < $amount) {	
-		echo "<tr id=\"q".$row["questionID"]."\"><td>"
-		.$row["questionContent"]."</td><td><img class=\"vote\"></img><span class=\"weight\">"
-		.$row["weight"]."</span></td></tr>";		
+	if ($_POST["isInstructor"] != 0) {
+		echo "<table id=\"qTable\">";
 		$row = mysqli_fetch_assoc($result);
-		++$i;
+		while ($row && $i < $amount) {
+			echo "<tr id=\"q".$row["questionID"]."\">"
+			."<td><img class=\"flag\"></img></td>"
+			."<td>".$row["questionContent"]."</td>"
+			."<td><img class=\"vote\"></img>"
+			."<span class=\"weight\">".$row["weight"]."</span></td>"
+			."<td><img class=\"check\"></img></td></tr>";
+			
+			$row = mysqli_fetch_assoc($result);
+			++$i;
+		}
+		echo "</table>";
 	}
-	echo "</table>";
-	
+	else {
+		echo "<table id=\"qTable\">";
+		$row = mysqli_fetch_assoc($result);
+		while ($row && $i < $amount) {	
+			echo "<tr id=\"q".$row["questionID"]."\"><td>"
+			.$row["questionContent"]."</td><td><img class=\"vote\"></img><span class=\"weight\">"
+			.$row["weight"]."</span></td></tr>";		
+			
+			$row = mysqli_fetch_assoc($result);
+			++$i;
+		}
+		echo "</table>";
+	}
 }
 else {
 	echo mysqli_error($conn);
