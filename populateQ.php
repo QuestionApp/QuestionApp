@@ -59,8 +59,9 @@ if ($result) {
 		echo "<table id=\"qTable\">";
 		$row = mysqli_fetch_assoc($result);
 		while ($row && $i < $amount) {	
-			echo "<tr id=\"q".$row["questionID"]."\"><td><p>"
-			.$row["questionContent"]."</p></td><td><img class=\"vote\"></img><span class=\"weight\">"
+			echo "<tr id=\"q".$row["questionID"]."\">"
+			."<td><p>".$row["questionContent"]."</p></td>"
+			."<td style=\"width: 50px;\"><img class=\"vote\"></img><span class=\"weight\">"
 			.$row["weight"]."</span></td></tr>";		
 			
 			$row = mysqli_fetch_assoc($result);

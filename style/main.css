@@ -52,7 +52,7 @@ h1, .menu, #questionStream {
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-	width: 800px;	
+	max-width: 800px;	
 }
 
 #questionStream {
