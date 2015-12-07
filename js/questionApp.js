@@ -51,6 +51,13 @@ function getCookie(cName){
 	return undefined; 
 }
 
+function questionStreamInstructor(currentClass) {
+	var questionStream = document.createElement("DIV");
+	questionStream.id = "questionStream";
+	populateQuestions(10, "null", true);
+	
+}
+
 //called when a studen presses the submit button on the home page
 //if input was given, create the questions popup, otherwise display error
 function submitQuestion() {
@@ -121,17 +128,28 @@ function popupVerify() {
 //calls a php file to get questions related to the class chosen
 //from the database in format that is directly placed into the
 //questionScroll HTML
-function populateQuestions(amount, classChosen) {
-	var data = "amount=" + amount + "&class=" + classChosen;
+function populateQuestions(amount, classChosen, isInstructor) {
+	isInstructor = isInstructor || false;
+	
+	var data = 	"amount=" + amount + "&class=" + classChosen 
+				+ "&isInstructor=" + isInstructor;
+				
 	questionScroll = document.getElementById("scrollMenu");
 	
 	loadingIMG("scrollMenu");
-	
-	//get questions related to class and amount
-	XMLRequest("populateQ.php", data, function(xhttp) {
-		questionScroll.innerHTML = xhttp.responseText;
-		populateVotes();
-	});
+	if (isInstructor) {
+		//get questions related to class and amount for istructor
+		XMLRequest("populateQ.php", data, function(xhttp) {
+			console.log(xhttp.responseText);
+		});
+	}
+	else {
+		//get questions related to class and amount for student
+		XMLRequest("populateQ.php", data, function(xhttp) {
+			questionScroll.innerHTML = xhttp.responseText;
+			populateVotes();
+		});	
+	}
 }
 
 //assumes all elements of class "vote" are img elements

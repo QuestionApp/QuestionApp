@@ -10,7 +10,7 @@ if (isset($_SESSION["name"]) && $_SESSION["name"] == $_SERVER["REMOTE_USER"]) {
 else {
 	if ($_SERVER["REMOTE_USER"]) {
 		$_SESSION["name"] = $_SERVER["REMOTE_USER"];
-		$_SESSION["type"] = "Student"; //can be Student or Teacher
+		$_SESSION["type"] = "Instructor"; //can be Student or Instructor
 		$_SESSION["classes"] = ["INFO 200"=>True,
 								"CSE 142"=>True,
 								"MATH 125"=>False];
@@ -30,10 +30,12 @@ $newUser = saveUser($servername, $username, $password, $db, $port, $name, $type,
 
 common_head();
 if ($active) {
-	if ($type == "Teacher") {
-		
-	}
-	else { //type == Student?>
+	if ($type == "Instructor") { ?>
+		<script type="text/javascript">
+			questionStreamInstructor(<?="\"$active\""?>);
+		</script>
+	<?php } 
+	else { //type == Student ?>
 		<h1><?=$active?></h1>
 		<div class="menu">	
 			<h2>Type your question here:</h2>
@@ -69,6 +71,29 @@ function saveUser($servername, $username, $password, $db, $port, $name, $type, $
 	$result = mysqli_query($conn, $sql);
 	if ($result) {
 		if (mysqli_num_rows($result) > 0) { /*person exists*/
+			$sql = "SELECT us.type
+					FROM user as u
+					JOIN usertype as us
+					ON u.userID = us.userID
+					WHERE u.userName = \"$name\"
+					AND us.type = \"$type\"";
+			
+			$result = mysqli_query($conn, $sql);
+			
+			if (mysqli_num_rows($result) > 0) { 
+			/*user has had this type before */
+				return true;
+			}
+			
+			$sql = "SELECT userID FROM user WHERE userName = \"$name\"";
+			$result = mysqli_query($conn, $sql);
+			$userID = mysqli_fetch_assoc($result)["userID"];
+			
+			$sql = "INSERT INTO usertype (userID, type)
+					VALUES ($userID, \"$type\");";
+			
+			$result = mysqli_query($conn, $sql);
+			mysqli_close($conn);
 			return true;
 			/*
 			while ($row = mysqli_fetch_assoc($result)) {

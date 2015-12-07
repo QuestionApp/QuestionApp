@@ -23,6 +23,13 @@ if ($_POST["class"] != "null") {
 	$class = $_POST["class"];
 }
 
+if ($_POST["isInstructor"]) {
+	echo "hi";
+}
+else {
+	echo "hibad";
+}
+
 $amount = $_POST["amount"];
 
 $conn = mysqli_connect($servername, $username, $password, $db, $port);
