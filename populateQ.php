@@ -44,11 +44,11 @@ if ($result) {
 		$row = mysqli_fetch_assoc($result);
 		while ($row && $i < $amount) {
 			echo "<tr id=\"q".$row["questionID"]."\">"
-			."<td><img class=\"flag\"></img></td>"
-			."<td>".$row["questionContent"]."</td>"
-			."<td><img class=\"vote\"></img>"
+			."<td style=\"width: 50px;\"><img class=\"flag\"></img></td>"
+			."<td><p>".$row["questionContent"]."</p></td>"
+			."<td style=\"width: 50px;\"><img class=\"vote\"></img>"
 			."<span class=\"weight\">".$row["weight"]."</span></td>"
-			."<td><img class=\"check\"></img></td></tr>";
+			."<td style=\"width: 50px;\"><img class=\"check\"></img></td></tr>";
 			
 			$row = mysqli_fetch_assoc($result);
 			++$i;
@@ -59,8 +59,8 @@ if ($result) {
 		echo "<table id=\"qTable\">";
 		$row = mysqli_fetch_assoc($result);
 		while ($row && $i < $amount) {	
-			echo "<tr id=\"q".$row["questionID"]."\"><td>"
-			.$row["questionContent"]."</td><td><img class=\"vote\"></img><span class=\"weight\">"
+			echo "<tr id=\"q".$row["questionID"]."\"><td><p>"
+			.$row["questionContent"]."</p></td><td><img class=\"vote\"></img><span class=\"weight\">"
 			.$row["weight"]."</span></td></tr>";		
 			
 			$row = mysqli_fetch_assoc($result);

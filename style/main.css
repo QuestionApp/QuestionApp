@@ -14,7 +14,7 @@ body {
 }
 
 p, span, li {
-	font-size: 20px; 
+	font-size: 15px; 
 }
 
 #wrapper {
@@ -56,7 +56,7 @@ h1, .menu, #questionStream {
 }
 
 #questionStream {
-	max-width: 650px;
+	max-width: 950px;
 }
 
 h1 {
@@ -165,10 +165,11 @@ form * {
 
 #qTable {
 	padding: 5px;
+	width: 100%;
 }
 
-#qTable td {
-
+#qTable td p{
+	font-size: 18px;
 }
 
 #qTable td img {
@@ -176,15 +177,19 @@ form * {
 }
 
 #qTable td span {
+	font-size: 22px;
 	bottom: 30px;
 	left: 46%;
 	position: relative;	
+	
 }
+
 /*
 #qTable * {
 	outline: 1px solid black;
 }
 */
+
 .vote, .check, .flag {
 	cursor: pointer;
 }
