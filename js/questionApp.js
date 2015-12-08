@@ -56,8 +56,36 @@ function questionStreamInstructor(currentClass) {
 	var title = document.createElement("H1");
 	title.innerHTML = currentClass
 	
+	var questionWrapper = document.createElement("DIV");
+	questionWrapper.id = "questionWrapper";
+	
 	var questionStream = document.createElement("DIV");
 	questionStream.id = "questionStream";
+	
+	var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	
+	var labels = ["Questions", "Topics", "Flagged"];
+	for (var i = 0; i < 3; ++i) {		
+		var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		g.id = labels[i];
+		
+		var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		text.innerHTML = labels[i];
+		text.setAttribute("x", 6 + 195 * i);
+		text.setAttribute("y", 30);
+		
+		var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		var d = "M" + (195 * i) + ",40 L" + (195 * i)
+					+ ",0 L" + (185 + 185 * i) + ",0 L"
+					+ (195 + 195 * i) + ",40";
+		path.setAttribute("d", d);
+		//"M0,40 L0,0 L142,0 L158,40"
+		
+		g.appendChild(path);
+		g.appendChild(text);
+		svg.appendChild(g);
+	}
+	questionWrapper.appendChild(svg);
 	
 	var questionScroll = document.createElement("DIV");
 	questionScroll.id = "scrollMenu";
@@ -70,7 +98,10 @@ function questionStreamInstructor(currentClass) {
 	
 	content.appendChild(title);
 	questionStream.appendChild(questionScroll);
-	content.appendChild(questionStream);
+	questionWrapper.appendChild(questionStream);
+	content.appendChild(questionWrapper);
+	
+	console.log(document.getElementById("Questions"));
 	
 	populateQuestions(10, "null", 1);
 	

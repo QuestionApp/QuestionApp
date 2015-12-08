@@ -1,6 +1,7 @@
 /*CSS File for QuestionApp*/
 * {
 	clear: both; /* moves down until it isnt sharing space with anything */
+	font-family: "Lucida Sans Unicode";
 }
 
 html, body {
@@ -13,6 +14,12 @@ body {
 	background: linear-gradient(#e8e3d3, white) no-repeat;
 }
 
+input, button {
+	background: #4b2e83;
+	color: white;
+	font-size: 15px;
+}
+
 p, span, li {
 	font-size: 15px; 
 }
@@ -22,9 +29,14 @@ p, span, li {
 	position: relative;
 }
 
+header, header img {
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+
 header {
 	padding-bottom: 50px;
-	margin-left: 8px;
 }
 
 #content {
@@ -48,14 +60,14 @@ footer * {
 	text-align: center;
 }
 
-h1, .menu, #questionStream {
+h1, .menu, #questionStream, #questionWrapper  {
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
 	max-width: 800px;	
 }
 
-#questionStream {
+#questionStream, #questionWrapper {
 	max-width: 950px;
 }
 
@@ -87,11 +99,31 @@ form * {
 	margin: 2px;
 }
 
+svg {
+	height: 40px;
+	margin-left: 10px;
+	margin-bottom: -8px;
+	padding-left: 2px;
+	padding-top: 2px;
+	width: 800px;
+}
+
+path {
+	fill: none;
+	stroke: black;
+	stroke-width: 4;
+	
+}
+
+text {
+	font-size: 30px;
+}
+
 #settingsBottom {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
-	bottom: -210px;
+	bottom: -190px;
 	width: 500px;
 }
 
