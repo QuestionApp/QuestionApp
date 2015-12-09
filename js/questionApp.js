@@ -69,7 +69,7 @@ function populateInstructorX() {
 	var allX = document.getElementsByClassName("instructorX");
 
 	for (var i = 0; i < allX.length; i++) {
-		allX[i].src = "images/X-small.png";
+		allX[i].src = "images/x-small.png";
 		allX[i].onclick = function() {
 			this.onclick = null;
 			this.parentElement.parentElement.removeChild(this.parentElement);
@@ -139,7 +139,7 @@ function questionStreamInstructor(currentClass) {
 	
 	var activeTab = document.getElementById("Questions");
 	activeTab.setAttribute("class", "activeTab");
-	populateQuestions(10, "null", 1);
+	populateQuestions(20, "null", 1);
 	
 }
 
@@ -193,7 +193,7 @@ function popupVerify() {
 	prompt.appendChild(questionScroll);
 	
 	//puts questions in the questionScroll 
-	populateQuestions(10, "null");
+	populateQuestions(20, "null");
 	
 	var continueB = document.createElement("DIV");
 	continueB.innerHTML = "<button>Post my question</button>";
