@@ -96,12 +96,12 @@ function saveUser($servername, $username, $password, $db,
 					VALUES ($userID, \"$type\");";
 			
 			$result = mysqli_query($conn, $sql);
-			mysqli_close($conn);
 			
 			if ($type = "Instructor") {
 				addTeacher($servername, $username, $password, $db, $port,
 						   $name, $active);
 			}
+			
 			mysqli_close($conn);
 			return true;
 			/*
@@ -154,7 +154,7 @@ function addTeacher ($servername, $username, $password, $db, $port, $name, $clas
 	}	
 	
 	$sql = "SELECT classID FROM class 
-			WHERE name = \"$class\"";
+			WHERE title = \"$class\"";
 	
 	$result = mysqli_query($conn, $sql);
 
