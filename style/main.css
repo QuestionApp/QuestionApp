@@ -219,6 +219,7 @@ text {
 
 #qTable td p{
 	font-size: 18px;
+	margin-bottom: 2px;
 }
 
 #qTable td img {
@@ -255,5 +256,23 @@ text {
 
 .vote, .check, .flag, .instructorX {
 	cursor: pointer;
+}
+
+.time, .spoiler {
+	display: inline-block;
+}
+
+.spoiler {
+	background-color: black;
+	margin-top: 0;
+}
+
+.spoiler:hover {
+	color: white;
+}
+
+.time {
+	font-size: 6px;
+	margin-left: 10px;
 }
 

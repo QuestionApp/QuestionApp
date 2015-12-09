@@ -31,8 +31,12 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT questionID, questionContent, weight FROM question
-		WHERE class = \"$class\" AND flagged = 0;";
+$sql = "SELECT questionID, questionContent, weight, timePosted, userName
+		FROM question as q
+		JOIN user as u
+		ON q.userID = u.userID
+		WHERE class = \"$class\"
+		AND flagged = 0;";
 
 $result = mysqli_query($conn, $sql);
 
@@ -45,7 +49,9 @@ if ($result) {
 		while ($row && $i < $amount) {
 			echo "<tr id=\"q".$row["questionID"]."\">"
 			."<td style=\"width: 50px;\"><img class=\"flag\"></img></td>"
-			."<td><p>".$row["questionContent"]."</p></td>"
+			."<td><p>".$row["questionContent"]."</p>"
+			."<p class=\"spoiler\">".$row["userName"]."</p>"
+			."<p class=\"time\">".$row["timePosted"]."</p></td>"
 			."<td style=\"width: 50px;\"><img class=\"vote\"></img>"
 			."<span class=\"weight\">".$row["weight"]."</span></td>"
 			."<td style=\"width: 50px;\"><img class=\"check\"></img></td></tr>";
