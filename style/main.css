@@ -82,7 +82,11 @@ h1 {
 .menu, #questionStream {
 	border: 2px solid black;
 	border-radius: 10px;
-	max-height: 800px;
+	height: 800px;
+}
+
+#settingsMenu {
+	height: 600px;
 }
 
 .menu h2 {
@@ -198,10 +202,13 @@ text {
 	color: red;
 }
 
+#scrollMenu, #allInstructors {
+	overflow: auto;
+}
+
 #scrollMenu {
 	border: 1px solid Black;
 	height: 80%;
-	overflow: auto;
 	padding: 10px;
 }
 
@@ -232,9 +239,18 @@ text {
 }
 */
 
-#form, #allInstructors {
+#allInstructors {
+	border: 2px solid black;
 	left: 50px;
+	padding: 5px;
 	position: relative;
+	height: 120px;
+	width: 200px;
+}
+
+#allInstructors img {
+	float: right;
+	margin-bottom: 10px;
 }
 
 .vote, .check, .flag, .instructorX {

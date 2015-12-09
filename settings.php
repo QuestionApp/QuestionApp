@@ -57,7 +57,7 @@ else {
 }	
 
 function settingsStart($name, $connected) { ?>
-	<div class="menu">
+	<div id="settingsMenu" class="menu">
 		<h2><?=$name?> - <?=$connected?></h2>
 		<form action="home.php" method="get">
 			<div>
