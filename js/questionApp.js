@@ -78,8 +78,12 @@ function populateInstructorX() {
 	}
 }
 
-function handleX(id) {
-	console.log(id);
+function handleX(instructorName) {
+	var data = "instructorName=" + instructorName;
+	
+	XMLRequest("deleteInstructor.php", data, function(xhttp) {
+		console.log(xhttp.responseText);
+	});
 }
 
 //populate a questionStream with instructor permissions for the currentClass
