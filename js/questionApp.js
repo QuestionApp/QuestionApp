@@ -377,6 +377,8 @@ function popupResult(success) {
 	var goBack = document.createElement("P");
 	goBack.innerHTML = "<button>Go Back</button>";
 	goBack.onclick = function() {
+		questionInput = document.getElementById("questionInput");
+		questionInput.value = "";
 		hidePopup();
 	}
 	prompt.appendChild(goBack);
