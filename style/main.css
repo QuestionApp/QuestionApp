@@ -82,7 +82,7 @@ h1 {
 .menu, #questionStream {
 	border: 2px solid black;
 	border-radius: 10px;
-	height: 400px;
+	max-height: 800px;
 }
 
 .menu h2 {
@@ -194,6 +194,9 @@ text {
 	display: none;
 	color: red;
 }
+#instructorError {
+	color: red;
+}
 
 #scrollMenu {
 	border: 1px solid Black;
@@ -229,7 +232,12 @@ text {
 }
 */
 
-.vote, .check, .flag {
+#form, #allInstructors {
+	left: 50px;
+	position: relative;
+}
+
+.vote, .check, .flag, .instructorX {
 	cursor: pointer;
 }
 

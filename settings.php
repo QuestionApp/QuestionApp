@@ -18,15 +18,33 @@ if ($type == "Student") {
 	settingsBottom();
 }
 elseif ($type == "Instructor") { 
+	$er = $_GET["er"];
 	settingsStart($name, $connected); ?>
-	
 	<h3>Instructors for this course:</h3>
-	<div id="form">
+	<?php
+	if ($er != null) { ?>
+		<p id="instructorError"> 
+		<?php 
+		if ($er == "n") { ?>
+			Please enter something
+		<?php }
+		elseif ($er == "b") { ?>
+			Invalid Entry
+		<?php }
+		elseif ($er == "e") { ?>
+			Instructor already exists of this name
+		<?php }
+		else { ?>
+			Unspecified Error
+		<?php } ?>
+		</p>
+	<?php } ?>
+	<form action="addInstructor.php" method="post" id="Instructorform">
 		<span>Add Instructor:</span>
 		<input type="text" name="userName"></input>
 		<br />
-		<input type="submit" value="Add" onclick="addInstructor()"></input>
-	</div>
+		<input type="submit" value="Add"></input>
+	</form>
 	<div id="allInstructors">
 		
 	</div>

@@ -84,6 +84,7 @@ function saveUser($servername, $username, $password, $db,
 			
 			if (mysqli_num_rows($result) > 0) { 
 			/*user has had this type before */
+				mysqli_close($conn);
 				return true;
 			}
 			
@@ -101,7 +102,7 @@ function saveUser($servername, $username, $password, $db,
 				addTeacher($servername, $username, $password, $db, $port,
 						   $name, $active);
 			}
-			
+			mysqli_close($conn);
 			return true;
 			/*
 			while ($row = mysqli_fetch_assoc($result)) {
@@ -132,7 +133,7 @@ function saveUser($servername, $username, $password, $db,
 				addTeacher($servername, $username, $password, $db, $port,
 						   $name, $active);
 			}
-			
+			mysqli_close($conn);
 			return False;
 		}
 	}
@@ -176,6 +177,7 @@ function addTeacher ($servername, $username, $password, $db, $port, $name, $clas
 			VALUES ($classID, \"$name\")";
 	
 	mysqli_query($conn, $sql);
+	mysqli_close($conn);
 }
 
 common_foot();

@@ -55,7 +55,31 @@ function getCookie(cName){
 }
 
 function getInstructors() {
+	var allInstructors = document.getElementById("allInstructors");
 	
+	var data = "input=plsRespond";
+	
+	XMLRequest("getInstructors.php", data, function(xhttp) {
+		allInstructors.innerHTML = xhttp.responseText;
+		populateInstructorX();
+	});
+}
+
+function populateInstructorX() {
+	var allX = document.getElementsByClassName("instructorX");
+
+	for (var i = 0; i < allX.length; i++) {
+		allX[i].src = "images/X-small.png";
+		allX[i].onclick = function() {
+			this.onclick = null;
+			this.parentElement.parentElement.removeChild(this.parentElement);
+			handleX(this.parentElement.id);
+		}
+	}
+}
+
+function handleX(id) {
+	console.log(id);
 }
 
 //populate a questionStream with instructor permissions for the currentClass

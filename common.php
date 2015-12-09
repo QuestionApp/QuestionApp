@@ -18,7 +18,7 @@ function common_head() { ?>
 						<ul>
 							<li><a href="home.php">Home</a></li>
 							<li><a href="myQuestions.php">My Questions</a></li>
-							<li><a href="settings.php">Settings</a></li>
+							<li><a href="settings.php?er=">Settings</a></li>
 							<li><a href="help.php">Help</a></li>
 							<li><a href="logout.php">Logout</a></li>
 						</ul>
@@ -29,7 +29,7 @@ function common_head() { ?>
 
 function common_foot() { ?>
 				</div>
-				<footer><p>Question Master 2015</p></footer>
+				<footer><p>Question Master 2015 - An Info 200 Project</p></footer>
 			</div>
 		</body>
 	</html>
