@@ -12,7 +12,33 @@ $connected = "Connected";
 
 include("common.php");
 common_head();
-if ($type = "Student") { ?>
+
+if ($type == "Student") {
+	settingsStart($name, $connected);
+	settingsBottom();
+}
+elseif ($type == "Instructor") { 
+	settingsStart($name, $connected); ?>
+	
+	<h3>Instructors for this course:</h3>
+	<div id="form">
+		<span>Add Instructor:</span>
+		<input type="text" name="userName"></input>
+		<br />
+		<input type="submit" value="Add" onclick="addInstructor()"></input>
+	</div>
+	<div id="allInstructors">
+		
+	</div>
+	<?php
+	settingsBottom();
+}
+else {
+	print("Error: Incorrect login type");
+	die();
+}	
+
+function settingsStart($name, $connected) { ?>
 	<div class="menu">
 		<h2><?=$name?> - <?=$connected?></h2>
 		<form action="home.php" method="get">
@@ -33,6 +59,9 @@ if ($type = "Student") { ?>
 			</div>
 			<input type="submit" value="Apply">
 		</form>
+<?php }
+
+function settingsBottom() { ?>
 		<div id="settingsBottom">
 			<ul>
 				<li><a href="#">Report Bug</a></li>
@@ -40,14 +69,8 @@ if ($type = "Student") { ?>
 				<li><a href="#">Privacy Policy</a></li>
 			</ul>
 		</div>
-	</div>
+	</div>	
 <?php }
-else if ($type = "Teacher") { ?>
 
-<?php }
-else {
-	print("Error: Incorrect login type");
-	die();
-}	
 common_foot();
 ?>

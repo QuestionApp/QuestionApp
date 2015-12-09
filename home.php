@@ -26,7 +26,8 @@ setcookie("name", $name);
 include("common.php");
 require("configure.php");
 
-$newUser = saveUser($servername, $username, $password, $db, $port, $name, $type, $classes);
+$newUser = saveUser($servername, $username, $password, $db, 
+					$port, $name, $type, $active, $classes);
 
 common_head();
 if ($active) {
@@ -60,7 +61,8 @@ else { ?>
 	</div>
 <?php }
 
-function saveUser($servername, $username, $password, $db, $port, $name, $type, $classes) {
+function saveUser($servername, $username, $password, $db, 
+				  $port,$name, $type, $active, $classes) {
 	$conn = mysqli_connect($servername, $username, $password, $db, $port);
 
 	if (!$conn) {
@@ -94,6 +96,12 @@ function saveUser($servername, $username, $password, $db, $port, $name, $type, $
 			
 			$result = mysqli_query($conn, $sql);
 			mysqli_close($conn);
+			
+			if ($type = "Instructor") {
+				addTeacher($servername, $username, $password, $db, $port,
+						   $name, $active);
+			}
+			
 			return true;
 			/*
 			while ($row = mysqli_fetch_assoc($result)) {
@@ -120,6 +128,11 @@ function saveUser($servername, $username, $password, $db, $port, $name, $type, $
 				die("Error: " . mysqli_error($conn));
 			}
 			
+			if ($type = "Instructor") {
+				addTeacher($servername, $username, $password, $db, $port,
+						   $name, $active);
+			}
+			
 			return False;
 		}
 	}
@@ -129,6 +142,42 @@ function saveUser($servername, $username, $password, $db, $port, $name, $type, $
 	}
 
 }
+
+//adds the teacher's name to the specified class
+function addTeacher ($servername, $username, $password, $db, $port, $name, $class) {
+	
+	$conn = mysqli_connect($servername, $username, $password, $db, $port);
+
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}	
+	
+	$sql = "SELECT classID FROM class 
+			WHERE name = \"$class\"";
+	
+	$result = mysqli_query($conn, $sql);
+
+	//class existed already
+	if (mysqli_num_rows($result) > 0) {
+		$classID = mysqli_fetch_assoc($result)["classID"];
+	}
+	//add the class first
+	else {
+		$sql = "INSERT INTO class (title)
+				VALUES (\"$class\")";
+		
+		mysqli_query($conn, $sql);
+
+		$classID = mysqli_insert_id($conn);
+	}
+	
+	//add the instructor to the class
+	$sql = "INSERT INTO instructor (classID, name)
+			VALUES ($classID, \"$name\")";
+	
+	mysqli_query($conn, $sql);
+}
+
 common_foot();
 ?>
 

@@ -3,6 +3,9 @@
 window.onload = function() {
 	refreshNavLinks();
 	addWelcome();
+	if (document.getElementById("allInstructors")) {
+		getInstructors();
+	}
 };
 
 //ensures that the navigation bar will not provide a link
@@ -51,6 +54,10 @@ function getCookie(cName){
 	return undefined; 
 }
 
+function getInstructors() {
+	
+}
+
 //populate a questionStream with instructor permissions for the currentClass
 function questionStreamInstructor(currentClass) {
 	var title = document.createElement("H1");
@@ -68,6 +75,7 @@ function questionStreamInstructor(currentClass) {
 	for (var i = 0; i < 3; ++i) {		
 		var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 		g.id = labels[i];
+		g.setAttribute("class", "inactiveTab");
 		
 		var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
 		text.innerHTML = labels[i];
@@ -101,8 +109,8 @@ function questionStreamInstructor(currentClass) {
 	questionWrapper.appendChild(questionStream);
 	content.appendChild(questionWrapper);
 	
-	console.log(document.getElementById("Questions"));
-	
+	var activeTab = document.getElementById("Questions");
+	activeTab.setAttribute("class", "activeTab");
 	populateQuestions(10, "null", 1);
 	
 }

@@ -115,6 +115,14 @@ path {
 	
 }
 
+.activeTab path {
+	stroke: #4b2e83;
+}
+
+.inactiveTab path {
+	fill: #d9d9d9;
+}
+
 text {
 	font-size: 30px;
 }
@@ -189,8 +197,7 @@ text {
 
 #scrollMenu {
 	border: 1px solid Black;
-	height: 50%;
-	/*width: 100%;*/
+	height: 80%;
 	overflow: auto;
 	padding: 10px;
 }
