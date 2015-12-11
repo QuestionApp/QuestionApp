@@ -61,6 +61,7 @@ function getInstructors() {
 	
 	XMLRequest("getInstructors.php", data, function(xhttp) {
 		allInstructors.innerHTML = xhttp.responseText;
+		var instructors = allInstructors.getElementsByTagName("DIV");
 		populateInstructorX();
 	});
 }
@@ -139,7 +140,7 @@ function questionStreamInstructor(currentClass) {
 	
 	var activeTab = document.getElementById("Questions");
 	activeTab.setAttribute("class", "activeTab");
-	populateQuestions(20, "null", 1);
+	populateQuestions(40, "null", 1);
 	
 }
 
@@ -193,12 +194,13 @@ function popupVerify() {
 	prompt.appendChild(questionScroll);
 	
 	//puts questions in the questionScroll 
-	populateQuestions(20, "null");
+	populateQuestions(40, "null");
 	
-	var continueB = document.createElement("DIV");
+	var continueB = document.createElement("SPAN");
+	continueB.style.float = "right";
 	continueB.innerHTML = "<button>Post my question</button>";
 	
-	var goBack = document.createElement("DIV");
+	var goBack = document.createElement("SPAN");
 	goBack.innerHTML = "<button>Go Back</button>";
 	goBack.onclick = function() {
 		hidePopup();

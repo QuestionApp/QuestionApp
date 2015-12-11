@@ -53,7 +53,7 @@ if ($result) {
 			."<p class=\"spoiler\">".$row["userName"]."</p>"
 			."<p class=\"time\">".$row["timePosted"]."</p></td>"
 			."<td style=\"width: 50px;\"><img class=\"vote\"></img>"
-			."<span class=\"weight\">".$row["weight"]."</span></td>"
+			."<p class=\"weight\">".$row["weight"]."</p></td>"
 			."<td style=\"width: 50px;\"><img class=\"check\"></img></td></tr>";
 			
 			$row = mysqli_fetch_assoc($result);
@@ -67,8 +67,8 @@ if ($result) {
 		while ($row && $i < $amount) {	
 			echo "<tr id=\"q".$row["questionID"]."\">"
 			."<td><p>".$row["questionContent"]."</p></td>"
-			."<td style=\"width: 50px;\"><img class=\"vote\"></img><span class=\"weight\">"
-			.$row["weight"]."</span></td></tr>";		
+			."<td style=\"width: 50px;\"><img class=\"vote\"></img><p class=\"weight\">"
+			.$row["weight"]."</p></td></tr>";		
 			
 			$row = mysqli_fetch_assoc($result);
 			++$i;

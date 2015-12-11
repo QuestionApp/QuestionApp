@@ -212,6 +212,13 @@ text {
 	padding: 10px;
 }
 
+.weight {
+	font-size: 22px;
+	bottom: 50px;
+	position: relative;	
+	text-align: center;
+}
+
 #qTable {
 	padding: 5px;
 	width: 100%;
@@ -224,14 +231,6 @@ text {
 
 #qTable td img {
 	margin-bottom: 10px;
-}
-
-#qTable td span {
-	font-size: 22px;
-	bottom: 30px;
-	left: 46%;
-	position: relative;	
-	
 }
 
 /*
