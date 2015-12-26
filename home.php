@@ -1,66 +1,78 @@
 <?php
 session_start();
-
-if (isset($_SESSION["name"]) && $_SESSION["name"] == $_SERVER["REMOTE_USER"]) {
+require("configure.php");
+if ($_POST["type"]) {
+	//if ($_SERVER["REMOTE_USER"]) {
+	$_SESSION["name"] = "Shaun";
+	$_SESSION["type"] = $_POST["type"]; //can be Student or Instructor
+	$_SESSION["classes"] = ["INFO 200"=>True,
+				"CSE 142"=>True,
+				"MATH 125"=>False];
+	$_SESSION["active"] = "INFO 200";
+	
 	$name = $_SESSION["name"];
 	$type = $_SESSION["type"];
 	$classes = $_SESSION["classes"];
 	$active = $_SESSION["active"];
+	//}
+}
+if (!isset($_SESSION["name"])) {//&& $_SESSION["name"] == $_SERVER["REMOTE_USER"]
+	?>
+	<form action="" method="post">
+		<span>Choose a view for this session</span>
+		<select name="type">
+			<option value="Student">Student</option>
+			<option value="Instructor">Instructor</option>
+		</select>
+		<input type="submit" value="Submit">
+	</form>
+	<?php
 }
 else {
-	if ($_SERVER["REMOTE_USER"]) {
-		$_SESSION["name"] = $_SERVER["REMOTE_USER"];
-		$_SESSION["type"] = "Instructor"; //can be Student or Instructor
-		$_SESSION["classes"] = ["INFO 200"=>True,
-								"CSE 142"=>True,
-								"MATH 125"=>False];
-		$_SESSION["active"] = "INFO 200";
-		
-		$name = $_SESSION["name"];
-		$type = $_SESSION["type"];
-		$classes = $_SESSION["classes"];
-		$active = $_SESSION["active"];
+	$name = $_SESSION["name"];
+	$type = $_SESSION["type"];
+	$classes = $_SESSION["classes"];
+	$active = $_SESSION["active"];
+
+	setcookie("name", $name);
+	include("common.php");
+
+	$newUser = saveUser($servername, $username, $password, $db, 
+						$port, $name, $type, $active, $classes);
+
+	common_head();
+	if ($active) {
+		if ($type == "Instructor") { ?>
+			<script type="text/javascript">
+				questionStreamInstructor(<?="\"$active\""?>);
+			</script>
+		<?php } 
+		else { //type == Student ?>
+			<h1><?=$active?></h1>
+			<div class="menu">	
+				<h2>Type your question here:</h2>
+				<p id="questionError"></p>
+				<textarea id="questionInput"></textarea>
+				<p><button onclick="submitQuestion()">Submit</button></p>
+			</div>
+		<?php }
 	}
-}
-setcookie("name", $name);
-include("common.php");
-require("configure.php");
-
-$newUser = saveUser($servername, $username, $password, $db, 
-					$port, $name, $type, $active, $classes);
-
-common_head();
-if ($active) {
-	if ($type == "Instructor") { ?>
-		<script type="text/javascript">
-			questionStreamInstructor(<?="\"$active\""?>);
-		</script>
-	<?php } 
-	else { //type == Student ?>
-		<h1><?=$active?></h1>
-		<div class="menu">	
-			<h2>Type your question here:</h2>
-			<p id="questionError"></p>
-			<textarea id="questionInput"></textarea>
-			<p><button onclick="submitQuestion()">Submit</button></p>
+	else { ?>
+		<div id="homeClasses" class="menu">
+			<h2>Your Classes</h2>
+			<?php
+			foreach (array_keys($classes) as $class) { 
+				if ($classes[$class]) { ?>
+					<p><a onclick="streamClass(<?=$class?>)" href="#"><?=$class?></a></p>
+				<?php }
+				else { ?>
+					<p><?=$class?></p>
+				<?php }
+			}?>
 		</div>
 	<?php }
+	common_foot();
 }
-else { ?>
-	<div id="homeClasses" class="menu">
-		<h2>Your Classes</h2>
-		<?php
-		foreach (array_keys($classes) as $class) { 
-			if ($classes[$class]) { ?>
-				<p><a onclick="streamClass(<?=$class?>)" href="#"><?=$class?></a></p>
-			<?php }
-			else { ?>
-				<p><?=$class?></p>
-			<?php }
-		}?>
-	</div>
-<?php }
-
 function saveUser($servername, $username, $password, $db, 
 				  $port,$name, $type, $active, $classes) {
 	$conn = mysqli_connect($servername, $username, $password, $db, $port);
@@ -179,7 +191,5 @@ function addTeacher ($servername, $username, $password, $db, $port, $name, $clas
 	mysqli_query($conn, $sql);
 	mysqli_close($conn);
 }
-
-common_foot();
 ?>
 
